@@ -1,0 +1,37 @@
+#!/usr/bin/perl
+
+# Written on 2011-11-23
+# "watch -n 1 --exec true" is way too slow!
+
+use strict;
+use warnings;
+
+use POSIX qw(strftime setuid setgid setsid);
+use Time::HiRes qw(usleep gettimeofday);
+
+(undef, undef, my $uid, my $gid) = getpwnam('nobody');
+
+open STDIN, '<', '/dev/null' or die $!;
+open STDOUT, '>', '/dev/tty12' or die $!;
+open STDERR, '>', '/dev/null' or die $!;
+
+setgid($gid) or die $!;
+setuid($uid) or die $!;
+
+# Daemonize:
+chdir('/') or die;
+exit if fork();
+setsid();
+exit if fork();
+sleep 1 until getppid() == 1;
+
+$| = 1;
+print "\e[?25l\e[2J\e[H";
+while (1) {
+	print "\r\e[K";
+	(my $seconds, my $useconds) = gettimeofday();
+	print strftime('%a, %d %b %Y %H:%M:%S %z', localtime $seconds);
+	usleep(1_000_000 - $useconds);
+}
+
+# vim:ts=4 sw=4 et
