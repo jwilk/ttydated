@@ -19,7 +19,7 @@ setgid($gid) or die $!;
 setuid($uid) or die $!;
 
 # Daemonize:
-chdir('/') or die;
+chdir('/') or die $!;
 exit if fork();
 setsid();
 exit if fork();
