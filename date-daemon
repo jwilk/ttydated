@@ -15,8 +15,11 @@ open STDIN, '<', '/dev/null' or die $!;
 open STDOUT, '>', '/dev/tty12' or die $!;
 open STDERR, '>', '/dev/null' or die $!;
 
-setgid($gid) or die $!;
-setuid($uid) or die $!;
+$! = 0;
+$( = $gid; die $! if $!;
+$) = "$gid $gid"; die $! if $!;
+$< = $uid; die $! if $1;
+$> = $uid; die $! if $!;
 
 # Daemonize:
 chdir('/') or die $!;
