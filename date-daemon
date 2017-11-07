@@ -1,8 +1,5 @@
 #!/usr/bin/perl
 
-# Written on 2011-11-23
-# "watch -n 1 --exec true" is way too slow!
-
 use strict;
 use warnings;
 
