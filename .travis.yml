@@ -1,8 +1,9 @@
 dist: trusty
 language: perl
-perl:
-- "5.8"
-- "5.28"
+jobs:
+  include:
+  - perl: "5.8"
+  - perl: "5.28"
 install: []
 script:
 - perl -wc ttydated
