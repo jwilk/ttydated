@@ -4,7 +4,7 @@ jobs:
   include:
   - perl: "5.8"
     dist: trusty
-  - perl: "5.28"
+  - perl: "5.30"
 install: []
 script:
 - perl -wc ttydated
